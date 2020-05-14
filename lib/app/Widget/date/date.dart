@@ -54,17 +54,6 @@ class _DateWidgetState extends State<DateWidget>
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                           child: Icon(Icons.delete, size: 23,),
                           height: 23,
-                          minWidth: 230000000000.toString()
-
-
-
-
-
-
-
-
-
-                          ,
                           onPressed:(){
                             dateList.removeAt(index) ;
                             setState(() {
