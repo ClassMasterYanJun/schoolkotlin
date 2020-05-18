@@ -73,6 +73,7 @@ class WorkCalendarState extends State<WorkCalendar> {
           onPressed: (){
 
             setNext(lastDay);
+
             var newCalendar = Calendar();
             DatePicker.showDatePicker(
               context,
@@ -86,7 +87,6 @@ class WorkCalendarState extends State<WorkCalendar> {
                 dateList.add(newCalendar);
                 DateWidget(dateList: dateList,);
                 lastDay = date.add(new Duration(days: 1));
-                print(lastDay);
                 setState(() {});
                 },
               showTitleActions: true,
@@ -121,10 +121,10 @@ class WorkCalendarState extends State<WorkCalendar> {
 
       setNext(day){
 
-        if(day != null){
-          day.add(new Duration(days: 1));
-        }else{
+        if(day == null){
+
           day = DateTime.now();
+
         }
 
         lastDay = day;
