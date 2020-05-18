@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
-
 class TimeWidget extends StatefulWidget {
-  TimeWidget({Key key, this.title, this.wish, this.day}) : super(key: key);
-  final bool wish;
-  final String title;
-  final String day;
+  TimeWidget({Key key, this.timeList}) : super(key: key);
+  List<dynamic> timeList;
 
   @override
   _TimeWidgetState createState() => _TimeWidgetState();
@@ -14,27 +11,28 @@ class TimeWidget extends StatefulWidget {
 class _TimeWidgetState extends State<TimeWidget>
     with SingleTickerProviderStateMixin {
 
-  final List<String> _timeList = [
-    "12:00",
-    "12:30",
-    "13:00",
-    "13:30"
-  ];
+  List<dynamic> _timeList;
 
   refresh(){
-    setState(() { });
+
+    setState(() {
+
+    });
   }
 
   @override
   void initState() {
     super.initState();
+    super.setState(() {
+      _timeList = widget.timeList;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
 
       return new ListView.builder(
-          itemCount: _timeList.length,
+          itemCount: _timeList.length == null ? 0 : _timeList.length,
           itemBuilder: (context, index) {
                     return Card(
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9.0)),
@@ -66,7 +64,6 @@ class _TimeWidgetState extends State<TimeWidget>
                                     locale: LocaleType.ru,
                                     showSecondsColumn: false,
                                     onConfirm: (time) {
-
                                       var newTime = time.hour.toString() + ":" + time.minute.toString();
                                       _timeList.removeAt(index);
                                       _timeList.insert(index, newTime);

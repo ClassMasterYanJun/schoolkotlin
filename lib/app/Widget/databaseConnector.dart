@@ -1,6 +1,7 @@
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutterapp/app/Widget/cabinet/Calendar.dart';
 
 
 import 'dart:async';
@@ -13,6 +14,7 @@ class DatabaseConnector {
 
   final cardRef =  FirebaseDatabase.instance.reference() ;
   CardData cardData;
+  Calendar calendar;
   Future databaseConnector() async {
     final FirebaseApp app = await FirebaseApp.configure(
       name: 'flutter-11e85',
@@ -37,6 +39,14 @@ class DatabaseConnector {
     this.cardRef.reference().child("cards");
 
     cardRef.push().set(cardData.toJson());
+
+
+  }
+  void saveCalendar(calendar){
+
+    this.cardRef.reference().child("Calendars");
+
+    cardRef.push().set(Calendar);
 
 
   }

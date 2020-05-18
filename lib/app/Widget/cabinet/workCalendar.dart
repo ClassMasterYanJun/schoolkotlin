@@ -5,6 +5,8 @@ import 'package:flutterapp/app/Widget/cards/cardData.dart';
 import 'package:flutterapp/app/Widget/date/date.dart';
 import 'dart:async';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutterapp/app/Widget/cabinet/Calendar.dart';
+
 
 class WorkCalendar extends StatefulWidget {
 
@@ -15,8 +17,9 @@ class WorkCalendar extends StatefulWidget {
 
 class WorkCalendarState extends State<WorkCalendar> {
 
-  List<String> dateList = [];
+  List<dynamic> dateList = [];
   List<dynamic> data = [];
+
 
 
 
@@ -70,12 +73,17 @@ class WorkCalendarState extends State<WorkCalendar> {
         body: DateWidget(dateList: dateList),
         floatingActionButton: FloatingActionButton(
           onPressed: (){
+            var newCalendar = Calendar();
             DatePicker.showDatePicker(
               context,
               minTime: DateTime.now(),
               maxTime: DateTime(2030, 12 , 30),
               onConfirm: (date) {
-                dateList.add(formater(date).toString());
+                var value = formater(date).toString();
+                List timeList = [];
+                newCalendar.workDate = {value : timeList};
+                newCalendar.masterCode = "121";
+                dateList.add(newCalendar);
                 DateWidget(dateList: dateList,);
                 setState(() {});
                 },

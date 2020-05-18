@@ -83,7 +83,7 @@ class _TagsWidgetState extends State<TagsWidget>
               splashColor: Colors.amber,
               combine: ItemTagsCombine.withTextBefore,
               onPressed:(item){
-
+                print(item.title);
               }
 
             );

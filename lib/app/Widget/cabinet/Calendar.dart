@@ -2,10 +2,8 @@
 class Calendar{
 
   String masterCode;
-  String date;
-  List<String> times;
+  Map workDate;
 
-  Calendar(this.masterCode,this.date, this.times);
-
+  Calendar();
 }
 

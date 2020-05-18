@@ -89,7 +89,7 @@ class _AccauntWidget extends State<AccauntWidget> with SingleTickerProviderState
                 ),
               ),
               Text("Вид вашей услуги:"),
-              TagsWidget(wish: false) ,
+              TagsWidget(wish: false,item: item,) ,
               Container(
                 child: Row(
                   children: <Widget>[
@@ -159,7 +159,7 @@ class _AccauntWidget extends State<AccauntWidget> with SingleTickerProviderState
               child: Text("Сохранить"),
               onPressed: () {
 
-
+                print(item);
                 this.workTime = this.workTimeHour.toString() + " : " + this.workTimeMinutes.toString();
                 saveInData(nameMaters, date, workTime, time, street, examples, nameService, _avatar, 0);
 
