@@ -19,9 +19,7 @@ class WorkCalendarState extends State<WorkCalendar> {
 
   List<dynamic> dateList = [];
   List<dynamic> data = [];
-
-
-
+  var lastDay;
 
   Future _getData() async {
 
@@ -73,10 +71,12 @@ class WorkCalendarState extends State<WorkCalendar> {
         body: DateWidget(dateList: dateList),
         floatingActionButton: FloatingActionButton(
           onPressed: (){
+
+            setNext(lastDay);
             var newCalendar = Calendar();
             DatePicker.showDatePicker(
               context,
-              minTime: DateTime.now(),
+              minTime: lastDay,
               maxTime: DateTime(2030, 12 , 30),
               onConfirm: (date) {
                 var value = formater(date).toString();
@@ -85,6 +85,8 @@ class WorkCalendarState extends State<WorkCalendar> {
                 newCalendar.masterCode = "121";
                 dateList.add(newCalendar);
                 DateWidget(dateList: dateList,);
+                lastDay = date.add(new Duration(days: 1));
+                print(lastDay);
                 setState(() {});
                 },
               showTitleActions: true,
@@ -102,22 +104,33 @@ class WorkCalendarState extends State<WorkCalendar> {
       //_getData();
     }
 
-    formater(date){
-
+    formater(date) {
       var day = date.day.toString();
       var month = date.month.toString();
 
-      if(day.length < 2){
+      if (day.length < 2) {
         day = "0" + date.day.toString();
       }
-      if(month.length < 2){
+      if (month.length < 2) {
         month = "0" + date.month.toString();
       }
-      var newDate = day+"."+ month +"."+date.year.toString();
+      var newDate = day + "." + month + "." + date.year.toString();
 
       return newDate;
+      }
 
-    }
+      setNext(day){
+
+        if(day != null){
+          day.add(new Duration(days: 1));
+        }else{
+          day = DateTime.now();
+        }
+
+        lastDay = day;
+
+      }
+
 
   }
 

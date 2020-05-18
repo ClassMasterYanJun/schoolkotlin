@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         },
         theme: ThemeData(
           primaryColor: Colors.pink[200],
-          //visualDensity: VisualDensity.adaptivePlatformDensity,
+          //visualDensity : VisualDensity.adaptivePlatformDensity,
         ),
         home: HelloWidget(),
        );
