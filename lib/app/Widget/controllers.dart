@@ -3,7 +3,7 @@ import 'package:flutterapp/app/Widget/cards/cardData.dart';
 
 
 
-void saveInData(var nameMaters, var date, var workTime, var time, var street, var examples, var nameService, var avatar, var tag){
+void saveInData(String nameMaters, String date, String workTime, String time, String street,String examples, String nameService, String avatar, var tag){
 
 
     var cardData = CardData(
@@ -14,7 +14,7 @@ void saveInData(var nameMaters, var date, var workTime, var time, var street, va
       nameMaters.toString(),
       examples.toString(),
       nameService.toString(),
-      avatar, tag
+      avatar, tag.toString()
     ) ;
 
     if(nameMaters != null){

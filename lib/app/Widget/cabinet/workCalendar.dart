@@ -18,12 +18,15 @@ class WorkCalendar extends StatefulWidget {
 class WorkCalendarState extends State<WorkCalendar> {
 
   List<dynamic> dateList = [];
-  List<dynamic> data = [];
+  String masterCode;
+  Map workDate;
+
+  var day;
   var lastDay;
 
   Future _getData() async {
 
-      final cardRef =  FirebaseDatabase.instance.reference() ;
+      final cardRef =  FirebaseDatabase.instance.reference();
 
       Map<dynamic, dynamic> values;
 
@@ -31,25 +34,16 @@ class WorkCalendarState extends State<WorkCalendar> {
               (DataSnapshot snapshot){
 
             values = snapshot.value;
-            values.forEach((key,values) {
+            values.forEach((key,values){
+                Calendar c = Calendar(
+                    values[key]['masterCode'],
+                    values[key]["time"],
+                    values[key]['date']);
 
-              var cardData = CardData(
-
-                 values["date"].toString(),
-                 values["workTime"].toString(),
-                 values["time"].toString(),
-                 values["street"].toString(),
-                 values["nameMasters"].toString(),
-                 values["examples"].toString(),
-                 values["tag"],
-                 values[""],
-                 values[""]) ;
-
-              this.data.add(cardData);
+              dateList.add(c);
 
               this.setState(() {
 
-            //data =  cardData;
               });
             });
            });
@@ -74,19 +68,21 @@ class WorkCalendarState extends State<WorkCalendar> {
 
             setNext(lastDay);
 
-            var newCalendar = Calendar();
             DatePicker.showDatePicker(
               context,
               minTime: lastDay,
               maxTime: DateTime(2030, 12 , 30),
               onConfirm: (date) {
+                day = date;
                 var value = formater(date).toString();
-                List timeList = [];
-                newCalendar.workDate = {value : timeList};
-                newCalendar.masterCode = "121";
+                Map timeList = {};
+                masterCode = "121";
+                var newCalendar = Calendar(masterCode, timeList ,value,);
                 dateList.add(newCalendar);
                 DateWidget(dateList: dateList,);
+
                 lastDay = date.add(new Duration(days: 1));
+
                 setState(() {});
                 },
               showTitleActions: true,
@@ -114,7 +110,7 @@ class WorkCalendarState extends State<WorkCalendar> {
       if (month.length < 2) {
         month = "0" + date.month.toString();
       }
-      var newDate = day + "." + month + "." + date.year.toString();
+      var newDate = day + "_" + month + "_" + date.year.toString();
 
       return newDate;
       }

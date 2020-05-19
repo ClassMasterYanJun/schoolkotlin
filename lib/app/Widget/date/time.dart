@@ -5,6 +5,7 @@ class TimeWidget extends StatefulWidget {
   TimeWidget({Key key, this.timeList}) : super(key: key);
   List<dynamic> timeList;
 
+
   @override
   _TimeWidgetState createState() => _TimeWidgetState();
 }
@@ -31,6 +32,15 @@ class _TimeWidgetState extends State<TimeWidget>
   @override
   Widget build(BuildContext context) {
 
+      getTime(index){
+
+          Map map = _timeList[index];
+          List list = map.keys.toList();;
+          var time = list.last;
+
+        return time.toString();
+      }
+
       return new ListView.builder(
           itemCount: _timeList.length == null ? 0 : _timeList.length,
           itemBuilder: (context, index) {
@@ -48,7 +58,7 @@ class _TimeWidgetState extends State<TimeWidget>
                           Row(
                             children: <Widget>[
                               Text(
-                                _timeList[index].toString(),
+                                getTime(index),
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 20),
@@ -66,7 +76,8 @@ class _TimeWidgetState extends State<TimeWidget>
                                     onConfirm: (time) {
                                       var newTime = time.hour.toString() + ":" + time.minute.toString();
                                       _timeList.removeAt(index);
-                                      _timeList.insert(index, newTime);
+                                      Map timeMap = {newTime : true};
+                                      _timeList.insert(index, timeMap);
                                       refresh();
                                     },
                                   );
@@ -91,7 +102,11 @@ class _TimeWidgetState extends State<TimeWidget>
 
                       ),
                     );},
+
+
       );
+
+
 
   }
 

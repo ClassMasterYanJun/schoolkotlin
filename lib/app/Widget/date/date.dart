@@ -21,11 +21,13 @@ class _DateWidgetState extends State<DateWidget>
 
   List<dynamic> dateList;
 
+
   @override
   void initState() {
     super.initState();
     super.setState(() {
      if(widget.dateList != null){
+       print(widget.dateList);
         dateList = widget.dateList;
      }
     });
@@ -35,15 +37,13 @@ class _DateWidgetState extends State<DateWidget>
   Widget build(BuildContext context) {
       var text;
 
-
       return new ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount:  dateList == null ? 0 : dateList.length,
           itemBuilder: (context, index) {
             Calendar newCalendar =  dateList[index];
-            newCalendar.workDate.keys.forEach((k) { text = k.toString();});
-            List _timeList = newCalendar.workDate[text];
-
+            Map timeMap = newCalendar.time;
+            List<dynamic> timeList =[];
             return
               Container(
                 width: 300,
@@ -55,7 +55,7 @@ class _DateWidgetState extends State<DateWidget>
                     Row(
                       children: <Widget>[
                       Text(
-                        text,
+                        newCalendar.date.toString(),
                         style: TextStyle(
                             fontSize: 23),
                         textAlign: TextAlign.center,),
@@ -65,8 +65,6 @@ class _DateWidgetState extends State<DateWidget>
                           height: 20,
                           minWidth: 5,
                           onPressed:(){
-                            print(text + " " +  index.toString());
-                            print(dateList.length);
 
                             dateList.removeAt(index) ;
 
@@ -81,7 +79,7 @@ class _DateWidgetState extends State<DateWidget>
                         Container(
                           height: 495,
                           width: 285,
-                          child: TimeWidget(timeList: _timeList,),
+                          child: TimeWidget(timeList: timeList,),
                         ),
                       ],),
                     Row(
@@ -98,10 +96,12 @@ class _DateWidgetState extends State<DateWidget>
                                   showSecondsColumn: false,
                                   onConfirm: (time) {
                                     var newTime = time.hour.toString() + ":" + time.minute.toString();
-                                    _timeList.add(newTime);
-                                    TimeWidget(timeList: _timeList,);
-                                    DatabaseConnector().saveCalendar(newCalendar);
+                                    timeMap = {newTime : true};
+                                    timeList.add(timeMap);
+                                    TimeWidget(timeList: timeList,);
                                     setState(() {
+
+                                     //DatabaseConnector().saveCalendar(newCalendar);
                                     });
                                   },
                                 );

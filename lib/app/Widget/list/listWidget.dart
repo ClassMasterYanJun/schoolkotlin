@@ -23,31 +23,31 @@ class ListWidgetState extends State<ListWidget> {
 
 
 
-      final cardRef =  FirebaseDatabase.instance.reference() ;
+      final dbRef =  FirebaseDatabase.instance.reference().child('Cards');
 
       Map<dynamic, dynamic> values;
 
-      await cardRef.once().then(
+      await dbRef.once().then(
               (DataSnapshot snapshot){
 
             values = snapshot.value;
             values.forEach((key,values) {
 
-              var cardData = CardData(
+              CardData cardData = CardData(
 
-                 values["date"].toString(),
-                 values["workTime"].toString(),
-                 values["time"].toString(),
-                 values["street"].toString(),
-                 values["nameMasters"].toString(),
-                 values["examples"].toString(),
-                 values["tag"],
-                  values[""],
-                 values[""]) ;
+                 values[key]["workTime"].toString(),
+                 values[key]["time"].toString(),
+                 values[key]["street"].toString(),
+                 values[key]["nameMasters"].toString(),
+                 values[key]["examples"].toString(),
+                 values[key]["tag"],
+                  values[key][""], values[key]["date"],
+                 values[key][""]) ;
 
               this.data.add(cardData);
 
               this.setState(() {
+                print(values);
           });
         }
       );

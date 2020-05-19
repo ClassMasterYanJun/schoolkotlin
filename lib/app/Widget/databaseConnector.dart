@@ -13,9 +13,16 @@ import 'package:flutterapp/app/Widget/cards/cardData.dart';
 class DatabaseConnector {
 
   final cardRef =  FirebaseDatabase.instance.reference() ;
+  final db = FirebaseDatabase.instance;
+
   CardData cardData;
   Calendar calendar;
+
   Future databaseConnector() async {
+
+    db.setPersistenceEnabled(true);
+    db.setPersistenceCacheSizeBytes(10000000);
+
     final FirebaseApp app = await FirebaseApp.configure(
       name: 'flutter-11e85',
       options: Platform.isIOS
@@ -30,24 +37,17 @@ class DatabaseConnector {
         databaseURL: 'https://flutter-11e85.firebaseio.com/',
       ),
     );
-
     return app;
   }
 
   void saveCard(cardData){
 
-    this.cardRef.reference().child("cards");
-
-    cardRef.push().set(cardData.toJson());
-
+    this.cardRef.reference().child("Cards").set(cardData.toJson());
 
   }
   void saveCalendar(calendar){
 
-    this.cardRef.reference().child("Calendars");
-
-    cardRef.push().set(Calendar);
-
+    this.cardRef.reference().child("Calendars").set(calendar.toJson());
 
   }
 
@@ -72,7 +72,8 @@ class DatabaseConnector {
 
             }
 
-      );
+   );
+
 
 
    }
